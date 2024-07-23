@@ -4,6 +4,10 @@ plugins {
     kotlin("plugin.serialization") version "2.0.0"
 }
 
+apply {
+    from("../config/detekt/detekt.gradle")
+}
+
 android {
     namespace = "com.felipepalma14.translate"
     compileSdk = 34
@@ -39,6 +43,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.detekt.gradlePlugin)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
