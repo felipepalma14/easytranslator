@@ -17,6 +17,7 @@ class TranslateAPI {
     private val baseUrl: String = "https://translate.googleapis.com/translate_a/single?"
     private val url: StringBuilder = StringBuilder(baseUrl)
 
+    @Suppress("TooGenericExceptionCaught")
     suspend fun getTranslation(
         langFrom: String?,
         langTo: String?,
@@ -39,13 +40,13 @@ class TranslateAPI {
                 val obj = URL(url.toString())
                 val con = obj.openConnection() as HttpURLConnection
                 con.setRequestProperty("User-Agent", "Mozilla/5.0")
-                val `in` = BufferedReader(InputStreamReader(con.inputStream))
+                val inputStream = BufferedReader(InputStreamReader(con.inputStream))
                 var inputLine: String?
                 val response = StringBuffer()
-                while ((`in`.readLine().also { inputLine = it }) != null) {
+                while ((inputStream.readLine().also { inputLine = it }) != null) {
                     response.append(inputLine)
                 }
-                `in`.close()
+                inputStream.close()
                 val respJsonArray = Json.parseToJsonElement(response.toString()).jsonArray
 
                 val firstElementOnTheArray = respJsonArray[0]
@@ -58,7 +59,6 @@ class TranslateAPI {
                     val innerArray = it.jsonArray
 
                     val translated = innerArray[0].jsonPrimitive.content
-                    val source = innerArray[1].jsonPrimitive.content
 
                     output.append(translated)
                 }
