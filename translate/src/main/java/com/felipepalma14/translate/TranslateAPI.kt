@@ -14,8 +14,6 @@ import java.net.URL
 import java.net.URLEncoder
 
 class TranslateAPI {
-    private val baseUrl: String = "https://translate.googleapis.com/translate_a/single?"
-    private val url: StringBuilder = StringBuilder(baseUrl)
 
     @Suppress("TooGenericExceptionCaught")
     suspend fun getTranslation(
@@ -23,6 +21,8 @@ class TranslateAPI {
         langTo: String?,
         words: String?
     ): TranslationResult {
+        val baseUrl = "https://translate.googleapis.com/translate_a/single?"
+        val url: StringBuilder = StringBuilder(baseUrl)
         return withContext(Dispatchers.IO) {
             var result: TranslationResult
             try {
@@ -63,7 +63,7 @@ class TranslateAPI {
                     output.append(translated)
                 }
 
-                result = if (output.length > 2) {
+                result = if (output.length >= 2) {
                     TranslationResult(TranslationResult.Status.OK, output.toString())
                 } else {
                     TranslationResult(TranslationResult.Status.ERROR)
