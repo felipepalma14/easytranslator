@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">EasyTranslator</string>
+    <string name="error_on_translate_text">Não foi possível traduzir o texto</string>
+    <string name="text_field_label">Digite o texto que deseja traduzir</string>
+    <string name="text_field_placeholder">Texto …</string>
+    <string name="button_do_translate">TRANSLATE</string>
 </resources>
